@@ -1,0 +1,4 @@
+Script bastante útil para parar
+puertos introduciendo su numero.
+
+Recoge con un bucle for el PID y va matando procesos.

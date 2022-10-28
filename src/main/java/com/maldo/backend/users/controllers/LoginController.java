@@ -28,8 +28,7 @@ public class LoginController
 	}
 
 	@PostMapping("/signin")
-	public ResponseEntity<String> authenticateUser(@RequestBody LoginDTO loginDto)
-	{
+	public ResponseEntity<String> authenticateUser(@RequestBody LoginDTO loginDto) {
 		Optional<Users> optUsr = userRepository.findByEmail(loginDto.getEmail());
 		if(optUsr.isPresent())
 		{
@@ -43,7 +42,7 @@ public class LoginController
 	}
 
 	@PostMapping("/signup")
-	public ResponseEntity<?> registerUser(@RequestBody SignUpDTO dataTransfer)
+	public ResponseEntity< ? > registerUser(@RequestBody SignUpDTO dataTransfer)
 	{
 		if(Boolean.TRUE.equals(userRepository.existsByUsername(dataTransfer.getUsername())))
 			return
