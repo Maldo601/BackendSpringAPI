@@ -1,0 +1,65 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet author="Joan Marc Maldonado" id="1559579661189-1">
+        <createTable tableName="USER">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="USERNAME" type="VARCHAR(50)">
+                <constraints nullable="true" unique="true"/>
+            </column>
+            <column name="PASSWORD" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="EMAIL" type="VARCHAR(50)"/>
+            <column name="NAME" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="LASTNAME" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="SECONDLASTNAME" type="VARCHAR(50)"/>
+            <column name="CREATED_DATE" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            <column name="MODIFIED_DATE" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            <column name="IS_ACTIVE" type="BIT(1)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ROLE_ID" type="BIGINT">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Joan Marc Maldonado" id="1559579661189-2">
+        <createTable tableName="ROLES">
+            <column autoIncrement="true" name="ID" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="NAME" type="VARCHAR(60)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Joan Marc Maldonado"
+               id="1559579661189-3">
+        <addForeignKeyConstraint baseColumnNames="ROLE_ID"
+                                 baseTableName="user"
+                                 constraintName="FKRolesId"
+                                 onDelete="RESTRICT"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="ROLES"
+                                 validate="true"/>
+    </changeSet>
+</databaseChangeLog>
