@@ -3,57 +3,43 @@ package com.maldo.backend.config.swagger;
 import com.maldo.backend.config.security.AuthManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SwaggerConfig
+public class SwaggerConfig extends WebSecurityConfigurerAdapter
 {
 	/**
-	 * (1) Disable Cross-Site Request Forgery (CSRF)
-	 * (2) The user should be authenticated for any request in the application.
-	 * (3) Spring Security will never create an HttpSession, and it will never use it to obtain the Security Context.
-	 * (4) Spring Security’s HTTP Basic Authentication support is enabled by default.
-	 *     However, as soon as any servlet-based configuration is provided, HTTP Basic must be explicitly provided.
+	 * A parte de WebSecurityConfigurerAdapter, esté deprecado, para un entorno de desarrollo
+	 * ese método funciona. Da menos problems de configuración que el nuevo SecurityFilterChain.
 	 *
+	 * No usar con fines de producción.
 	 *
-	 *
-	 *     Si usamos el AuthenticationManager a la vez que el securityChain, aun teniendo el
-	 *     InMemoryUserDetailsManager, no vamos a acceder a la API
-	 *     con las credenciales establecidas.
-	 *
+	 * @param http the {@link HttpSecurity} to modify
 	 */
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
+	@Override
+	protected void configure(HttpSecurity http) throws Exception
 	{
-		return http
-				.authorizeRequests()
-				.antMatchers(HttpMethod.OPTIONS).permitAll()
-				.and()
-				.cors().disable()
-				.csrf(AbstractHttpConfigurer::disable) // (1)
-				.authorizeRequests( auth -> auth
-						.anyRequest().permitAll() // (2)
-				)
-				//.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // (3)
-				//.httpBasic(Customizer.withDefaults()) // (4)
-				.build();
+		CorsConfiguration corsConfiguration = new CorsConfiguration();
+		corsConfiguration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
+		corsConfiguration.setAllowedOrigins(List.of("*"));
+		corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT","OPTIONS","PATCH", "DELETE"));
+		corsConfiguration.setAllowCredentials(false);
+		corsConfiguration.setExposedHeaders(List.of("Authorization"));
+
+		// You can customize the following part based on your project, it's only a sample
+		http.authorizeRequests().antMatchers("/**").permitAll().anyRequest()
+				.authenticated().and().csrf().disable().cors().configurationSource(request -> corsConfiguration);
 	}
 
 	@Bean
@@ -66,31 +52,12 @@ public class SwaggerConfig
 					.build()
 		);
 	}
-
 	@Bean
-	PasswordEncoder passwordEncoder()
-	{
-		return new BCryptPasswordEncoder();
-	}
-
-
-	@Bean
-	CorsConfigurationSource corsConfigurationSource()
-	{
-		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowCredentials(false);
-		configuration.setAllowedOrigins(List.of("*"));
-		configuration.setAllowedMethods(List.of("*"));
-		configuration.setAllowedHeaders(List.of("*"));
-		configuration.addAllowedOriginPattern("*");
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", configuration);
-		return source;
-	}
-
-	@Bean
+	@Override
 	public AuthenticationManager authenticationManagerBean()
 	{
 		return new AuthManager();
 	}
+	@Bean
+	PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
 }
