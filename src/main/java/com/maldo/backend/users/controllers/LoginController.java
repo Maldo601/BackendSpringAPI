@@ -1,10 +1,14 @@
 package com.maldo.backend.users.controllers;
 
+import com.maldo.backend.config.security.AuthManager;
+import com.maldo.backend.users.repositories.RoleRepository;
 import com.maldo.backend.users.services.interfaces.UserDtoService;
 import com.maldo.backend.users.repositories.UsersRepository;
 
+import com.maldo.backend.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 import com.maldo.backend.users.domain.SignUpDTO;
 import com.maldo.backend.users.domain.LoginDTO;
@@ -12,23 +16,34 @@ import org.springframework.http.ResponseEntity;
 import com.maldo.backend.users.enums.Messages;
 import com.maldo.backend.users.entity.Users;
 import org.springframework.http.HttpStatus;
+
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
 public class LoginController
 {
+	protected JwtUtils jwtUtils;
+	protected AuthenticationManager authenticationManager;
+	protected RoleRepository roleRepository;
 	private final UsersRepository userRepository;
 	private final UserDtoService dtoService;
 
+
+
 	@Autowired
-	public LoginController(UserDtoService dtoService, UsersRepository userRepository) {
+	public LoginController(UserDtoService dtoService, UsersRepository userRepository, AuthenticationManager authenticationManager,
+						   RoleRepository roleRepository)
+	{
 		this.dtoService = dtoService;
 		this.userRepository = userRepository;
+		this.authenticationManager = authenticationManager;
+		this.roleRepository = roleRepository;
 	}
 
 	@PostMapping("/signin")
-	public ResponseEntity<String> authenticateUser(@RequestBody LoginDTO loginDto) {
+	public ResponseEntity<String> authenticateUser(@RequestBody LoginDTO loginDto)
+	{
 		Optional<Users> optUsr = userRepository.findByEmail(loginDto.getEmail());
 		if(optUsr.isPresent())
 		{
