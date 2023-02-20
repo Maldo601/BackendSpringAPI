@@ -13,7 +13,7 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create-drop
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyHbmImpl
@@ -40,16 +40,10 @@ spring:
       max-request-size: 215MB
       file-size-threshold: 2KB
 
-  # Necesario para evitar NullPointer en BootstraperDocumentation. En versiones
-  # anteriores de Swagger, no hace falta, como la 2.6.2. Esta, la 3.0 si.
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
 
   profiles:
     active:
     - spring
-
 
 
 
