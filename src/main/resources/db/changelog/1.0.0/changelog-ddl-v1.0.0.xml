@@ -8,24 +8,18 @@
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
     <changeSet author="Joan Marc Maldonado" id="1559579661189-1">
-        <createTable tableName="USER">
+        <createTable tableName="USERS">
             <column autoIncrement="true" name="ID" type="BIGINT">
-                <constraints primaryKey="true"/>
+                <constraints primaryKey="true" nullable="false" />
             </column>
-            <column name="USERNAME" type="VARCHAR(50)">
-                <constraints nullable="true" unique="true"/>
-            </column>
-            <column name="PASSWORD" type="VARCHAR(255)">
-                <constraints nullable="false" unique="true"/>
-            </column>
-            <column name="EMAIL" type="VARCHAR(50)"/>
+            <column name="EMAIL" type="VARCHAR(255)"/>
             <column name="NAME" type="VARCHAR(50)">
                 <constraints nullable="true"/>
             </column>
-            <column name="LASTNAME" type="VARCHAR(50)">
+            <column name="LASTNAME" type="VARCHAR(255)">
                 <constraints nullable="true"/>
             </column>
-            <column name="SECONDLASTNAME" type="VARCHAR(50)"/>
+            <column name="SECONDLASTNAME" type="VARCHAR(255)"/>
             <column name="CREATED_DATE" type="datetime">
                 <constraints nullable="true"/>
             </column>
@@ -35,11 +29,44 @@
             <column name="IS_ACTIVE" type="BIT(1)">
                 <constraints nullable="true"/>
             </column>
-            <column name="ROLE_ID" type="BIGINT">
+            <column name="ROLE" type="VARCHAR(50)">
                 <constraints nullable="true" />
             </column>
         </createTable>
     </changeSet>
+    <changeSet author="Joan Marc Maldonado" id="1559579661189-2">
+        <createTable tableName="TOKEN">
+            <column autoIncrement="true" name="ID" type="bigint">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="EXPIRED" type="bit">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REVOKED" type="bit">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TOKEN" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="TOKENTYPE" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="USERID" type="BIGINT">
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Joan Marc Maldonado"
+               id="1559579661189-3">
+        <addForeignKeyConstraint baseColumnNames="USERID"
+                                 baseTableName="token"
+                                 constraintName="FKUserId"
+                                 onDelete="RESTRICT"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="users"
+                                 validate="true"/>
+    </changeSet>
+    <!-- Roles
     <changeSet author="Joan Marc Maldonado" id="1559579661189-2">
         <createTable tableName="ROLES">
             <column autoIncrement="true" name="ID" type="BIGINT">
@@ -51,15 +78,6 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Joan Marc Maldonado"
-               id="1559579661189-3">
-        <addForeignKeyConstraint baseColumnNames="ROLE_ID"
-                                 baseTableName="user"
-                                 constraintName="FKRolesId"
-                                 onDelete="RESTRICT"
-                                 onUpdate="RESTRICT"
-                                 referencedColumnNames="ID"
-                                 referencedTableName="ROLES"
-                                 validate="true"/>
-    </changeSet>
+
+    -->
 </databaseChangeLog>

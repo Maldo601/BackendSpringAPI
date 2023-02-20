@@ -15,7 +15,6 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-
 public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
@@ -32,6 +31,7 @@ public class SecurityConfiguration {
                         "/api/v1/auth/**",
                         "/v3/api-docs/**",
                         "/v3/api-docs",
+                        "/v3/api-docs.yaml",
                         "/swagger-resources/**",
                         "/swagger-ui/index.html",
                         "/swagger-ui/**",
