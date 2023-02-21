@@ -26,9 +26,9 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) {
         var user = User.builder()
-                .name(request.getFirstname())
+                .name(request.getName())
                 .lastName(request.getLastname())
-                .secondLastName(request.getSecondLastName())
+                .secondLastName(request.getSecondlastname())
                 .createdDate(LocalDateTime.now())
                 .modifiedDate(LocalDateTime.now())
                 .email(request.getEmail())

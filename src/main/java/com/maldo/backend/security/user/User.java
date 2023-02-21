@@ -50,10 +50,6 @@ public class User implements UserDetails {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
-    public String getSecondLastName(){ return secondLastName; }
-    public void setSecondLastName(String secondLastName) {
-        this.secondLastName = secondLastName;
-    }
     @Override
     public String getPassword() {
         return password;
