@@ -31,8 +31,12 @@ public class User implements UserDetails {
     private String name;
     private String lastName;
     private String secondLastName;
+
+    @Column(name="CREATED_DATE")
     private LocalDateTime createdDate;
+    @Column(name="MODIFIED_DATE")
     private LocalDateTime modifiedDate;
+    @Column(name="IS_ACTIVE")
     private Boolean isActive;
 
     @Enumerated(EnumType.STRING)

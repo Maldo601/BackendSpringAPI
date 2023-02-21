@@ -9,7 +9,7 @@
 
     <changeSet author="Joan Marc Maldonado" id="1559579661189-1">
         <createTable tableName="USERS">
-            <column autoIncrement="true" name="ID" type="BIGINT">
+            <column autoIncrement="true" name="ID" type="INTEGER">
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="EMAIL" type="VARCHAR(255)"/>
@@ -39,7 +39,7 @@
     </changeSet>
     <changeSet author="Joan Marc Maldonado" id="1559579661189-2">
         <createTable tableName="TOKEN">
-            <column autoIncrement="true" name="ID" type="bigint">
+            <column autoIncrement="true" name="ID" type="INTEGER">
                 <constraints primaryKey="true" />
             </column>
             <column name="EXPIRED" type="bit">
@@ -54,7 +54,7 @@
             <column name="TOKENTYPE" type="VARCHAR(255)">
                 <constraints nullable="true"/>
             </column>
-            <column name="USERID" type="BIGINT">
+            <column name="USERID" type="INTEGER">
             </column>
         </createTable>
     </changeSet>
