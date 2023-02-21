@@ -1,4 +1,2 @@
-"ID", "NAME"
-1, "admin"
-2, "user"
-3, "guest"
+"ID", "EXPIRED", "REVOKED", "TOKEN", "TOKENTYPE", "USERID"
+1, 1, 1, "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYWxkbzYwMUBnbWFpbC5jb20iLCJpYXQiOjE2NzY5MTcyOTAsImV4cCI6MTY3NjkxODczMH0.w38pWjkvnPjCqH2AhjsNRpnp5sJolEjP0g02TLfaWEU", "BEARER", 1

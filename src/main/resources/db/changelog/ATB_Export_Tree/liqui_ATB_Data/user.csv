@@ -1,4 +1,5 @@
-"ID","USERNAME","PASSWORD","EMAIL","NAME","LASTNAME","SECONDLASTNAME","CREATED_DATE","MODIFIED_DATE","IS_ACTIVE", "ROLE"
-"1","Maldo601","Programmer1994!","maldo601@gmail.com","JoanMarc","Maldonado","Negre","2020-10-17T18:04:34","2021-06-16T06:01:08","true", "1"
+"ID","EMAIL","PASSWORD","NAME","LASTNAME","SECONDLASTNAME","CREATED_DATE","MODIFIED_DATE","IS_ACTIVE", "ROLE"
+
+"1","maldo601@gmail.com","$2a$10$2qargPkminN7rzyCZaPTWugxxX9ZcXebv8SP80.6Br3trnFSxNrwS","JoanMarc","Maldonado","Negre","2020-10-17T18:04:34","2021-06-16T06:01:08","true", "ADMIN"
 
 

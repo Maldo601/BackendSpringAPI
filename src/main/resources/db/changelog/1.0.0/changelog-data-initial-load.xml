@@ -6,7 +6,7 @@
     <changeSet author="Joan Marc Maldonado" id="INIT-DATA-1" >
 
         <!-- data -->
-        <sqlFile encoding="utf8" path="data/roles.sql" relativeToChangelogFile="true"/>
+
         <sqlFile encoding="utf8" path="data/users.sql" relativeToChangelogFile="true"/>
     </changeSet>
 </databaseChangeLog>
